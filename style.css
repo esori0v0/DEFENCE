@@ -18,8 +18,9 @@ body {
 }
 
 .game-wrap {
-  width: 920px;
+  width: 960px;
   max-width: 94vw;
+  min-height: 640px;
   background: #3f4b3b;
   border: 6px solid #101010;
   box-shadow: 12px 12px 0 #000;
@@ -53,23 +54,105 @@ h1 {
   text-shadow: 3px 3px 0 #111;
 }
 
-.story-card,
-.stage-panel,
-.reward-panel,
-.progress-panel {
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.title-card,
+.clear-card {
+  min-height: 440px;
+  background: #d2bd7f;
+  color: #211b17;
+  border: 5px solid #111;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.title-card h2,
+.clear-card h2 {
+  font-size: 34px;
+  color: #3b2415;
+  text-shadow: 2px 2px 0 #fff3bc;
+}
+
+.title-card p,
+.clear-card p {
+  line-height: 1.8;
+  font-weight: 700;
+}
+
+.dialog-scene {
+  min-height: 440px;
+  background: #6d7c58;
+  border: 5px solid #111;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.elder {
+  width: 180px;
+  height: 180px;
+  background: #d2bd7f;
+  border: 5px solid #111;
+  box-shadow: 8px 8px 0 #000;
+  font-size: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speech {
+  position: relative;
+  flex: 1;
+  background: #fff7d6;
+  color: #1b1b1b;
+  border: 5px solid #111;
+  padding: 28px;
+  box-shadow: 8px 8px 0 #000;
+}
+
+.speech::before {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: 64px;
+  width: 0;
+  height: 0;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-right: 28px solid #111;
+}
+
+.speech p {
+  font-size: 24px;
+  line-height: 1.7;
+  font-weight: 900;
+}
+
+.speech span {
+  display: inline-block;
+  margin-top: 16px;
+  background: #111;
+  color: #ffe66d;
+  padding: 8px 10px;
+}
+
+.stage-head {
   background: #6d7c58;
   border: 5px solid #111;
   padding: 18px;
-  margin-bottom: 16px;
-}
-
-.story-card {
-  background: #d2bd7f;
-  color: #211b17;
-}
-
-.story-card h2 {
-  color: #3b2415;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .label {
@@ -78,8 +161,16 @@ h1 {
   margin-bottom: 5px;
 }
 
+.stage-count {
+  background: #111;
+  color: #ffe66d;
+  padding: 14px;
+  border: 3px solid #000;
+  font-weight: 900;
+}
+
 .battle-field {
-  height: 150px;
+  height: 280px;
   background: #8cc1d3;
   border: 5px solid #111;
   margin: 18px 0;
@@ -87,30 +178,84 @@ h1 {
   overflow: hidden;
 }
 
+.sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 25%, #fff7d6 0 18px, transparent 19px),
+    linear-gradient(#8cc1d3, #7ab5c9);
+}
+
 .ground {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 42px;
-  background: #4f7d3b;
+  height: 62px;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.12) 12px, transparent 12px),
+    #4f7d3b;
+  background-size: 24px 24px;
   border-top: 5px solid #111;
 }
 
-.hero,
-.enemy {
+.unit {
   position: absolute;
-  bottom: 40px;
+  bottom: 62px;
   font-size: 52px;
-  image-rendering: pixelated;
+  filter: drop-shadow(4px 4px 0 #111);
+  animation: bob .6s infinite alternate steps(2);
 }
 
 .hero {
-  left: 60px;
+  left: 70px;
 }
 
-.enemy {
-  right: 70px;
+.m1 {
+  left: 145px;
+}
+
+.m2 {
+  left: 220px;
+}
+
+.enemy-unit {
+  position: absolute;
+  bottom: 62px;
+  right: -80px;
+  font-size: 48px;
+  filter: drop-shadow(4px 4px 0 #111);
+  animation: enemyWalk 5s linear infinite;
+}
+
+.enemy-unit:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.enemy-unit:nth-child(3) {
+  animation-delay: 2s;
+}
+
+@keyframes bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+@keyframes enemyWalk {
+  from { right: -80px; }
+  to { right: 510px; }
+}
+
+.battle-ui {
+  background: #30343f;
+  border: 5px solid #111;
+  padding: 16px;
+}
+
+.battle-ui p {
+  margin: 10px 0 0;
+  color: #d7d7d7;
+  text-align: center;
 }
 
 .main-btn,
@@ -129,6 +274,7 @@ h1 {
   background: #5fd068;
   color: #111;
   font-size: 20px;
+  margin-top: 24px;
 }
 
 .sub-btn {
@@ -146,41 +292,20 @@ button:active {
   box-shadow: none;
 }
 
-.drop-list,
-.dex-list {
+.reward-items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
+  gap: 14px;
+  margin-top: 24px;
 }
 
-.item {
+.reward-item {
   background: #2d3242;
+  color: #fff7d6;
   border: 4px solid #111;
-  padding: 12px;
-  text-align: center;
-}
-
-.item.got {
-  background: #ffe66d;
-  color: #111;
-}
-
-.empty {
-  color: #ddd;
-}
-
-.progress-box {
-  height: 28px;
-  background: #1c1c1c;
-  border: 4px solid #111;
-  overflow: hidden;
-}
-
-.progress-bar {
-  width: 0%;
-  height: 100%;
-  background: #5fd068;
-  transition: .25s;
+  padding: 18px 10px;
+  font-weight: 900;
+  box-shadow: 5px 5px 0 #111;
 }
 
 .modal {
@@ -197,8 +322,10 @@ button:active {
 }
 
 .modal-content {
-  width: 720px;
+  width: 790px;
   max-width: 92vw;
+  max-height: 88vh;
+  overflow-y: auto;
   background: #3f4b3b;
   border: 6px solid #111;
   box-shadow: 10px 10px 0 #000;
@@ -218,6 +345,36 @@ button:active {
   line-height: 1.5;
 }
 
+.dex-stage {
+  background: #6d7c58;
+  border: 5px solid #111;
+  padding: 14px;
+  margin-top: 14px;
+}
+
+.dex-stage h3 {
+  color: #ffe66d;
+  margin-bottom: 12px;
+}
+
+.dex-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+
+.dex-item {
+  background: #2d3242;
+  border: 4px solid #111;
+  padding: 12px;
+  text-align: center;
+}
+
+.dex-item.got {
+  background: #ffe66d;
+  color: #111;
+}
+
 .stat-box {
   margin-top: 16px;
   padding: 14px;
@@ -226,20 +383,24 @@ button:active {
   border: 4px solid #111;
 }
 
-@media (max-width: 700px) {
-  .top {
+@media (max-width: 720px) {
+  .top,
+  .dialog-scene,
+  .stage-head {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
   }
 
-  .drop-list,
-  .dex-list {
+  .reward-items,
+  .dex-items {
     grid-template-columns: 1fr;
   }
 
-  .hero,
-  .enemy {
-    font-size: 42px;
+  .speech p {
+    font-size: 18px;
+  }
+
+  .unit {
+    font-size: 40px;
   }
 }

@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="game-wrap">
+
     <header class="top">
       <div>
         <p class="badge">PIXEL DEFENSE RPG</p>
@@ -16,57 +17,101 @@
       <button id="openDexBtn" class="sub-btn">도감 보기</button>
     </header>
 
-    <section class="story-card">
-      <h2 id="caseTitle">EP.01 양 실종 사건</h2>
-      <p id="storyText">
-        평화로운 초록마을에서 양들이 하나둘 사라지고 있다.
-        마을 사람들은 늑대를 의심하지만, 현장에는 이상한 마법의 흔적이 남아있다.
-      </p>
+    <!-- 1. 타이틀 화면 -->
+    <section id="titleScreen" class="screen active">
+      <div class="title-card">
+        <h2>EP.01 양 실종 사건</h2>
+        <p>
+          사건을 해결하며 단서를 수집하고,<br />
+          도감을 채워 캐릭터를 성장시키는 디펜스 RPG
+        </p>
+        <button id="startGameBtn" class="main-btn">게임 시작</button>
+      </div>
     </section>
 
-    <section class="stage-panel">
-      <div class="stage-info">
-        <p class="label">현재 진행</p>
-        <h3 id="stageTitle">STAGE 1. 마을 입구 조사</h3>
-        <p id="stageDesc">마을 입구를 방어하며 첫 번째 단서를 수집하세요.</p>
+    <!-- 2. 의뢰 대화 화면 -->
+    <section id="dialogScreen" class="screen">
+      <div class="dialog-scene">
+        <div class="elder">👴</div>
+        <div class="speech">
+          <p>
+            마을의 양이 사라지고있어.<br />
+            늑대의 짓일까?
+          </p>
+          <span>SPACE BAR를 눌러 조사 시작</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 전투 화면 -->
+    <section id="battleScreen" class="screen">
+      <div class="stage-head">
+        <div>
+          <p class="label">현재 스테이지</p>
+          <h2 id="stageTitle">1 STAGE. 마을 입구</h2>
+          <p id="stageDesc">마을 입구로 몰려오는 늑대를 막으세요.</p>
+        </div>
+        <div class="stage-count" id="stageCount">1 / 3</div>
       </div>
 
       <div class="battle-field">
-        <div class="hero">🕵️</div>
+        <div class="sky"></div>
         <div class="ground"></div>
-        <div class="enemy" id="enemy">🐺</div>
+
+        <div class="unit hero">🕵️</div>
+        <div class="unit mercenary m1">🛡️</div>
+        <div class="unit mercenary m2">🏹</div>
+
+        <div id="enemyGroup" class="enemy-group"></div>
       </div>
 
-      <button id="clearBtn" class="main-btn">스테이지 클리어</button>
-    </section>
-
-    <section class="reward-panel">
-      <h3>이번 스테이지 획득 단서</h3>
-      <div id="dropList" class="drop-list">
-        <span class="empty">아직 획득한 단서가 없습니다.</span>
+      <div class="battle-ui">
+        <button id="clearStageBtn" class="main-btn">스테이지 클리어</button>
+        <p>발표용 프로토타입: 전투는 자동 연출, 버튼으로 클리어 처리</p>
       </div>
     </section>
 
-    <section class="progress-panel">
-      <h3>사건 진행도</h3>
-      <div class="progress-box">
-        <div id="progressBar" class="progress-bar"></div>
+    <!-- 4. 클리어 보상 화면 -->
+    <section id="clearScreen" class="screen">
+      <div class="clear-card">
+        <h2 id="clearTitle">1 STAGE CLEAR!</h2>
+        <p id="clearMessage">도감에 채울 수 있는 아이템 3개를 획득했습니다.</p>
+
+        <div id="rewardItems" class="reward-items"></div>
+
+        <button id="nextStageBtn" class="main-btn">다음 진행</button>
       </div>
-      <p id="progressText">0 / 3 STAGE</p>
     </section>
+
+    <!-- 5. 사건 완료 화면 -->
+    <section id="endingScreen" class="screen">
+      <div class="clear-card ending">
+        <h2>사건 해결 완료!</h2>
+        <p>
+          양 실종 사건의 원인은 단순한 늑대가 아니었습니다.<br />
+          누군가 늑대를 조종하고 있었다는 흔적이 발견되었습니다.
+        </p>
+        <button id="restartBtn" class="main-btn">처음부터 다시 보기</button>
+      </div>
+    </section>
+
   </div>
 
+  <!-- 도감 모달 -->
   <div id="dexModal" class="modal hidden">
     <div class="modal-content">
       <div class="modal-head">
         <h2>사건 도감</h2>
         <button id="closeDexBtn" class="close-btn">X</button>
       </div>
+
       <p class="dex-desc">
-        스테이지마다 정해진 단서 아이템이 랜덤으로 등장합니다.
-        도감을 채우면 캐릭터 능력치가 소폭 상승합니다.
+        도감은 스테이지별로 나뉘며, 각 스테이지에서 정해진 단서 아이템을 획득할 수 있습니다.
+        수집한 단서 수에 따라 캐릭터 능력치가 소폭 상승합니다.
       </p>
+
       <div id="dexList" class="dex-list"></div>
+
       <div class="stat-box">
         <p>도감 보너스</p>
         <strong id="statBonus">HP +0 / 공격력 +0</strong>

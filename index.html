@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사건 해결 디펜스 Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-wrap">
+    <header class="top">
+      <div>
+        <p class="badge">PIXEL DEFENSE RPG</p>
+        <h1>왕국 해결사 길드</h1>
+      </div>
+      <button id="openDexBtn" class="sub-btn">도감 보기</button>
+    </header>
+
+    <section class="story-card">
+      <h2 id="caseTitle">EP.01 양 실종 사건</h2>
+      <p id="storyText">
+        평화로운 초록마을에서 양들이 하나둘 사라지고 있다.
+        마을 사람들은 늑대를 의심하지만, 현장에는 이상한 마법의 흔적이 남아있다.
+      </p>
+    </section>
+
+    <section class="stage-panel">
+      <div class="stage-info">
+        <p class="label">현재 진행</p>
+        <h3 id="stageTitle">STAGE 1. 마을 입구 조사</h3>
+        <p id="stageDesc">마을 입구를 방어하며 첫 번째 단서를 수집하세요.</p>
+      </div>
+
+      <div class="battle-field">
+        <div class="hero">🕵️</div>
+        <div class="ground"></div>
+        <div class="enemy" id="enemy">🐺</div>
+      </div>
+
+      <button id="clearBtn" class="main-btn">스테이지 클리어</button>
+    </section>
+
+    <section class="reward-panel">
+      <h3>이번 스테이지 획득 단서</h3>
+      <div id="dropList" class="drop-list">
+        <span class="empty">아직 획득한 단서가 없습니다.</span>
+      </div>
+    </section>
+
+    <section class="progress-panel">
+      <h3>사건 진행도</h3>
+      <div class="progress-box">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <p id="progressText">0 / 3 STAGE</p>
+    </section>
+  </div>
+
+  <div id="dexModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h2>사건 도감</h2>
+        <button id="closeDexBtn" class="close-btn">X</button>
+      </div>
+      <p class="dex-desc">
+        스테이지마다 정해진 단서 아이템이 랜덤으로 등장합니다.
+        도감을 채우면 캐릭터 능력치가 소폭 상승합니다.
+      </p>
+      <div id="dexList" class="dex-list"></div>
+      <div class="stat-box">
+        <p>도감 보너스</p>
+        <strong id="statBonus">HP +0 / 공격력 +0</strong>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
